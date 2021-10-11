@@ -1,0 +1,273 @@
+<ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+    {if condition="$roles_id eq 1"}
+    <li data-name="home" class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;" lay-tips="主页" lay-direction="2">
+            <i class="layui-icon layui-icon-home"></i>
+            <cite>主页</cite>
+        </a>
+        <!-- <dl class="layui-nav-child">
+            <dd data-name="console" class="layui-this">
+                <a lay-href="{:url('index/welcome')}">控制台</a>
+            </dd>
+        </dl> -->
+    </li>
+    <li data-name="seeker" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="供应商管理" lay-direction="2">
+            <i class="layui-icon">&#xe667;</i>
+            <cite>供应商管理</cite>
+        </a>
+        <dl class="layui-nav-child">
+            <dd>
+                <a lay-href="{:url('supplier/add_edit')}">添加供应商</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('supplier/index')}">管理供应商</a>
+            </dd>
+            <!-- <dd>
+                <a lay-href="{:url('supplier/index')}">查询供应商</a>
+            </dd> -->
+        </dl>
+    </li>
+    <li data-name="seeker" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="客户信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe770;</i>
+            <cite>客户信息管理</cite>
+        </a>
+        <dl class="layui-nav-child">
+            <dd>
+                <a lay-href="{:url('member/add_user')}">添加客户</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('member/member_list')}">管理客户</a>
+            </dd>
+            <!-- <dd>
+                <a lay-href="{:url('member/member_list')}">查询客户</a>
+            </dd> -->
+           
+        </dl>
+    </li>
+    <li data-name="seeker" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="药品信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe653;</i>
+            <cite>药品信息管理</cite>
+        </a>
+        <dl class="layui-nav-child">
+            <dd>
+                <a lay-href="{:url('medicine/index')}">管理药品</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('medicine/add_edit')}">药品新增</a>
+            </dd>
+        </dl>
+    </li>
+    <li data-name="video" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="库存信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe66a;</i>
+            <cite>库存信息管理</cite>
+        </a>
+
+        <dl class="layui-nav-child">
+           
+            <dd>
+                <a lay-href="{:url('stock/add_stock')}">入库信息</a>
+            </dd>
+            <dd>
+
+                <a lay-href="{:url('stock/out_stock')}">出库信息</a>
+            </dd>
+            <!-- <dd>
+
+                <a lay-href="{:url('medicine/index')}">修改库存</a>
+            </dd>
+            <dd>
+
+                <a lay-href="{:url('medicine/index')}">库存查询</a>
+            </dd> -->
+           
+        </dl>
+       
+    </li>
+    <li data-name="video" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="系统设置" lay-direction="2">
+            <i class="layui-icon">&#xe716;</i>
+            <cite>系统设置</cite>
+        </a>
+
+        <dl class="layui-nav-child">
+           
+          
+            <dd>
+
+                <a lay-href="{:url('member/admin_list')}">管理员列表</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('role/index')}">角色管理</a>
+            </dd>
+           
+        </dl>
+       
+    </li>           
+    {/if}
+   
+    {if condition="$roles_id eq 2"}
+    <li data-name="home" class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;" lay-tips="主页" lay-direction="2">
+            <i class="layui-icon layui-icon-home"></i>
+            <cite>主页</cite>
+        </a>
+        <!-- <dl class="layui-nav-child">
+            <dd data-name="console" class="layui-this">
+                <a lay-href="{:url('index/welcome')}">控制台</a>
+            </dd>
+        </dl> -->
+    </li>
+    <li data-name="seeker" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="供应商管理" lay-direction="2">
+            <i class="layui-icon">&#xe667;</i>
+            <cite>供应商管理</cite>
+        </a>
+        <dl class="layui-nav-child">
+            <dd>
+                <a lay-href="{:url('supplier/add_edit')}">添加供应商</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('supplier/index')}">管理供应商</a>
+            </dd>
+            <!-- <dd>
+                <a lay-href="{:url('supplier/index')}">查询供应商</a>
+            </dd> -->
+        </dl>
+    </li>
+    <li data-name="seeker" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="客户信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe770;</i>
+            <cite>客户信息管理</cite>
+        </a>
+        <dl class="layui-nav-child">
+            <dd>
+                <a lay-href="{:url('member/add_user')}">添加客户</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('member/member_list')}">管理客户</a>
+            </dd>
+            <!-- <dd>
+                <a lay-href="{:url('member/member_list')}">查询客户</a>
+            </dd> -->
+           
+        </dl>
+    </li>
+    <li data-name="seeker" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="药品信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe653;</i>
+            <cite>药品信息管理</cite>
+        </a>
+        <dl class="layui-nav-child">
+            <dd>
+                <a lay-href="{:url('medicine/index')}">管理药品</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('medicine/add_edit')}">药品新增</a>
+            </dd>
+        </dl>
+    </li>
+    <li data-name="video" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="库存信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe66a;</i>
+            <cite>库存信息管理</cite>
+        </a>
+
+        <dl class="layui-nav-child">
+           
+            <dd>
+                <a lay-href="{:url('stock/add_stock')}">入库信息</a>
+            </dd>
+            <dd>
+
+                <a lay-href="{:url('stock/out_stock')}">出库信息</a>
+            </dd>
+            <!-- <dd>
+
+                <a lay-href="{:url('medicine/index')}">修改库存</a>
+            </dd>
+            <dd>
+
+                <a lay-href="{:url('medicine/index')}">库存查询</a>
+            </dd> -->
+           
+        </dl>
+       
+    </li>          
+    {/if}
+    {if condition="$roles_id eq 3"}
+    <li data-name="home" class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;" lay-tips="主页" lay-direction="2">
+            <i class="layui-icon layui-icon-home"></i>
+            <cite>主页</cite>
+        </a>
+        <!-- <dl class="layui-nav-child">
+            <dd data-name="console" class="layui-this">
+                <a lay-href="{:url('index/welcome')}">控制台</a>
+            </dd>
+        </dl> -->
+    </li>
+    <li data-name="seeker" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="客户信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe770;</i>
+            <cite>客户信息管理</cite>
+        </a>
+        <dl class="layui-nav-child">
+            <dd>
+                <a lay-href="{:url('member/add_user')}">添加客户</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('member/member_list')}">管理客户</a>
+            </dd>
+            <!-- <dd>
+                <a lay-href="{:url('member/member_list')}">查询客户</a>
+            </dd> -->
+           
+        </dl>
+    </li>
+    <li data-name="seeker" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="药品信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe653;</i>
+            <cite>药品信息管理</cite>
+        </a>
+        <dl class="layui-nav-child">
+            <dd>
+                <a lay-href="{:url('medicine/index')}">管理药品</a>
+            </dd>
+            <dd>
+                <a lay-href="{:url('medicine/add_edit')}">药品新增</a>
+            </dd>
+        </dl>
+    </li>
+    <li data-name="video" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="库存信息管理" lay-direction="2">
+            <i class="layui-icon">&#xe66a;</i>
+            <cite>库存信息管理</cite>
+        </a>
+
+        <dl class="layui-nav-child">
+           
+            <dd>
+                <a lay-href="{:url('stock/add_stock')}">入库信息</a>
+            </dd>
+            <dd>
+
+                <a lay-href="{:url('stock/out_stock')}">出库信息</a>
+            </dd>
+            <!-- <dd>
+
+                <a lay-href="{:url('medicine/index')}">修改库存</a>
+            </dd>
+            <dd>
+
+                <a lay-href="{:url('medicine/index')}">库存查询</a>
+            </dd> -->
+           
+        </dl>
+       
+    </li>          
+    {/if}
+</ul>

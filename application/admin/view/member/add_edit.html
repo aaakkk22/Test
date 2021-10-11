@@ -1,0 +1,139 @@
+{include file="public:header"/}
+
+<body layadmin-themealias="default">
+
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-header layui-elem-quote">当前位置：<span style="color: #009688;">修改信息</span></div>
+
+            <div class="layui-card-body" style="padding:15px;">
+
+                <form action="" method="post" class="layui-form" lay-filter="component-layui-form-item" 
+                    enctype="multipart/form-data">
+                    <!-- 隐藏的id   编辑的时候 有用  -->
+                    <input type="hidden" name="data[id]" value="{$list.id}" />
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='username' name="data[username]" class="form-control" value="{$list.username}" style="width: 300px;" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">邮箱</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='email' name="data[email]" class="form-control" value="{$list.email}" style="width: 300px;" lay-verify="required">
+                        </div>
+                    </div>
+                    <!-- 选择用户_end -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">修改权限</label>
+                        <div class="layui-input-block" id="select" style="width: 300px;">
+                            <select name="data[roles]" id="roles" lay-filter="cate_list" lay-verify="required">
+                                <option value="">请选择权限
+                                {volist name="$staff" id="vo"}
+                                <option value="{$vo.id}" {if $list['roles'] eq $vo.id} selected {/if} >{$vo.name}
+                                </option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='password' name="data[password]" class="form-control" value="" style="width: 300px;" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> </label>
+                        <div class="layui-input-block">
+                            <input type="submit" value="提交" lay-submit lay-filter="formDemo" class="btn btn-primary" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-default" style='margin-left:10px;'
+                                href="{:url('member/admin_list')}">返回列表</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '/layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use('index');
+    </script> -->
+    <script>
+
+
+    </script>
+    <script>
+        var layer = layui.layer;
+        var $;
+        var type;
+        layui.use(['jquery', 'layer', 'form', 'upload'], function () {
+            $ = layui.$;
+            var form = layui.form;
+            var upload = layui.upload;
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#images', //绑定元素
+                accept: 'file',
+                url: '{:url("base/layupload_oss")}', //上传接口
+                done: function (res) {
+
+                    console.log(res);
+                    $('#video').val(res.data.src); //视频链接
+
+                    if (res.code == 0) {
+                        layer.msg('上传成功');
+                    } else {
+                        layer.msg(res.msg);
+                    }
+
+
+                },
+                error: function (res) {
+                    layer.msg(res.msg);
+                    //请求异常回调
+                },
+            });
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                $.ajax({
+                    url: data.form.action,
+                    type: data.form.method,
+                    data: data.field,
+                    dataType: 'json',
+                    success: function (info) {
+
+                        if (info.status == -1) {
+                            layer.msg(info.msg, {
+                                icon: 2,
+                                time: 2000
+                            });
+                        } else if (info.status == 1) {
+
+                            layer.msg(info.msg, {
+                                icon: 1,
+                                time: 3000,
+                                end: function () {
+
+                                    var backurl =
+                                        "{:url('member/admin_list')}";
+                                    location.href = backurl;
+                                }
+                            });
+                        }
+                    }
+                });
+                return false;
+            });
+        })
+    </script>
+</body>
+
+</html>

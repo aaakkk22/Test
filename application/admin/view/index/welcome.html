@@ -1,0 +1,423 @@
+{include file="public:header"/}
+<style>
+	.tab-content>.tab-pane {
+		margin-top: 10px;
+	}
+
+	.tab-content>.tab-pane>.fui-list-group {
+		border-bottom: 0;
+	}
+
+	.userNum,
+	.goodsNum,
+	.orderNum {
+		height: 4.5rem;
+		width: 4.5rem;
+		margin: 0 auto;
+		cursor: pointer;
+		color: #000;
+	}
+
+	.nav {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		padding-left: 0;
+		margin-bottom: 0;
+		list-style: none;
+	}
+
+	.panel-1 .nav-left {
+		height: 4.8rem;
+		line-height: 4.8rem;
+		margin-left: 0.2rem;
+	}
+
+	.panel-1 .nav-left span {
+		font-size: 14px;
+	}
+
+	.nav select {
+		width: 50%;
+		margin: 1rem 1rem;
+
+	}
+
+	.panel-1 {
+		height: 13rem;
+	}
+
+	.panel {
+		padding: 0 1rem;
+		background: #fff;
+	}
+
+	.no-border {
+		border: none;
+	}
+</style>
+
+<style>
+	.flex-items {
+		display: flex;
+	}
+
+	.flex-items .flex-item {
+		flex: 1;
+	}
+
+	.todayboxs {
+		margin: 24px 0;
+	}
+
+	.todayboxs .flex-item {
+		background-color: #fff;
+		width: 100%;
+		height: 104px;
+		padding: 10px;
+		display: flex;
+		align-items: center;
+		margin-right: 10px;
+		color: #333;
+		box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
+	}
+
+	.todayboxs .flex-item:last-child {
+		margin-right: 0;
+	}
+
+	.todayboxs .icon {
+		width: 56px;
+		margin-right: 16px;
+	}
+
+	.todayboxs .num {
+		font-size: 24px;
+	}
+
+	.todayboxs .title {
+		color: #747474;
+	}
+
+	.row-panel {
+		margin-bottom: 24px;
+		display: flex;
+	}
+
+	.row-panel .row-panel-7 {
+		width: 50%;
+		flex-shrink: 1;
+	}
+
+	.row-panel .row-panel-5 {
+		width: 50%;
+		margin-left: 24px;
+		flex-shrink: 0;
+	}
+
+	.mypanel {
+		position: relative;
+		background-color: #fff;
+		padding: 0 20px;
+		box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
+	}
+
+	.mypanel .mypanel-heading {
+		font-size: 15px;
+		font-weight: 600;
+		border-bottom: 1px solid #f0f0f0;
+		height: 48px;
+		line-height: 48px;
+	}
+
+
+
+	.quick-panel .mypanel-body,
+	.total-panel .mypanel-body {
+		padding: 20px 0;
+	}
+
+	.quick-nav .flex-item,
+	.total-mes .flex-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		height: 68px;
+		margin-bottom: 20px;
+		margin-right: 20px;
+		color: #747474;
+	}
+
+	.total-mes .flex-item {
+		margin-bottom: 20px;
+		height: 68px;
+	}
+
+	.quick-nav .flex-item:last-child,
+	.total-mes .flex-item:last-child {
+		margin-right: 0;
+	}
+
+	.total-mes .num {
+		height: 48px;
+		line-height: 48px;
+		font-size: 15px;
+		color: #333;
+		font-weight: 600;
+	}
+
+	.quick-nav .flex-item:hover {
+		color: #436be6;
+	}
+
+	.quick-nav .iconfont {
+		height: 48px;
+		line-height: 48px;
+		font-size: 24px;
+		display: block;
+		transition: all 0.3s;
+	}
+
+	.quick-nav .flex-item:hover i {
+		font-size: 48px;
+	}
+</style>
+
+<body layadmin-themealias="default">
+	<div class="layui-row">
+		<div class="layui-row layui-col-space15">
+			<div class="flex-items todayboxs">
+				<a class="flex-item" href="{:url('#')}">
+					<img class="icon" src="/static/images/Block-1.png">
+					<div class="text">
+						<div class="num today_member_count"></div>
+						<div class="title">今日新增供应商</div>
+					</div>
+				</a>
+
+				<a class="flex-item" href="{:url('#')}">
+					<img class="icon" src="/static/images/Block-3.png">
+					<div class="text">
+						<div class="num today_pay_member_count"></div>
+						<div class="title">今日新增客户</div>
+					</div>
+				</a>
+
+				<a class="flex-item" href="{:url('#')}">
+					<img class="icon" src="/static/images/Block-2.png">
+					<div class="text">
+						<div class="num today_video_released"></div>
+						<div class="title">今日新增药品</div>
+					</div>
+				</a>
+
+
+				<a class="flex-item" href="{:url('#')}">
+					<img class="icon" src="/static/images/Block-6.png">
+					<div class="text">
+						<div class="num today_company_released"></div>
+						<div class="title">今日新增管理员</div>
+					</div>
+				</a>
+
+				<a class="flex-item" href="{:url('#')}">
+					<img class="icon" src="/static/images/Block-7.png">
+					<div class="text">
+						<div class="num today_seeker_released"></div>
+						<div class="title">今日新增入库</div>
+					</div>
+				</a>
+
+				<a class="flex-item" href="{:url('#')}">
+					<img class="icon" src="/static/images/Block-5.png">
+					<div class="text">
+						<div class="num today_message"></div>
+						<div class="title">今日新增出库</div>
+					</div>
+				</a>
+
+			</div>
+
+
+			<div class="row-panel">
+				<div class="row-panel-7">
+					<div class="mypanel total-panel">
+						<div class="mypanel-heading">药品进销存统计</div>
+						<div class="mypanel-body">
+							<div class="flex-items total-mes">
+								<div class="flex-item">
+									<div class="num member_count"></div>
+									<div>客户总数</div>
+								</div>
+								<div class="flex-item">
+									<div class="num video_count"></div>
+									<div>药品总数</div>
+								</div>
+								<div class="flex-item">
+									<div class="num all_message_count"></div>
+									<div>供应商总数</div>
+								</div>
+							</div>
+							<div class="flex-items total-mes">
+								<div class="flex-item">
+									<div class="num seven_member_count"></div>
+									<div>近七天入库数</div>
+								</div>
+								<div class="flex-item">
+									<div class="num seven_video_money"></div>
+									<div>近七天出库数</div>
+								</div>
+								<div class="flex-item">
+									<div class="num seven_message_money"></div>
+									<div>近七天客户</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="row-panel-5">
+					<div class="mypanel quick-panel">
+						<div class="mypanel-heading">快捷入口</div>
+						<div class="mypanel-body">
+
+
+							<div class="flex-items quick-nav">
+								<a href="{:url('admin/supplier/add_edit')}" class="flex-item">
+									<i class="iconfont icon-p"></i>
+									<div>添加供应商</div>
+								</a>
+
+								<a href="{:url('admin/supplier/index')}" class="flex-item">
+									<i class="iconfont icon--clipboard"></i>
+									<div>管理供应商</div>
+								</a>
+
+								<a href="{:url('admin/member/add_user')}" class="flex-item">
+									<i class="iconfont icon--users"></i>
+									<div>添加客户</div>
+								</a>
+
+								<a href="{:url('admin/member/member_list')}" class="flex-item">
+									<i class="iconfont icon--tree"></i>
+									<div>管理客户</div>
+								</a>
+
+								<a href="{:url('admin/medicine/index')}" class="flex-item">
+									<i class="iconfont icon--truck"></i>
+									<div>管理药品</div>
+								</a>
+							</div>
+
+							<!-- <div class="flex-items quick-nav">
+								<a href="{:url('admin/medicine/add_edit')}" class="flex-item">
+									<i class="iconfont icon-p5"></i>
+									<div>药品新增</div>
+								</a>
+								<a href="{:url('admin/stock/add_stock')}" class="flex-item">
+									<i class="iconfont icon--coin-yen"></i>
+									<div>入库信息</div>
+								</a>
+								<a href="{:url('admin/stock/out_stock')}" class="flex-item">
+									<i class="iconfont icon-p6"></i>
+									<div>出库信息</div>
+								</a>
+
+								<a href="{:url('admin/member/admin_list')}" class="flex-item">
+									<i class="iconfont icon--stats-bars1"></i>
+									<div>管理员列表</div>
+								</a>
+								<a href="{:url('admin/seeker/set_edit')}" class="flex-item">
+									<i class="iconfont icon-p7"></i>
+									<div>观看个数设置</div>
+								</a>
+							</div> -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+
+	<script src="/layuiadmin/layui/layui.js"></script>
+	<script src="/layuiadmin/lib/extend/echarts.min.js"></script>
+	<script src="/static/js/roll/jquery-1.11.0.min.js" type="text/javascript"></script>
+	<script src="/static/js/roll/jquery.waypoints.min.js"></script>
+	<script type="text/javascript" src="/static/js/roll/jquery.countup.min.js"></script>
+
+	<script>
+		layui.config({
+			base: '/layuiadmin/' //静态资源所在路径
+		}).extend({
+			index: 'lib/index' //主入口模块
+		}).use('index');
+	</script>
+
+	<script>
+		//由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
+		var layer = layui.layer;
+		var $;
+
+
+		var cur_type = 'normal';
+
+		layui.use(['jquery', 'layer'], function () {
+			$ = layui.$;
+			load_data();
+
+
+		});
+
+		function load_data() {
+			cur_type = $('#select_type').val();
+
+			$.ajax({
+				type: "GET",
+				url: "{:url('statistics/index_data')}",
+				data: { type: cur_type },
+				dataType: "json",
+				success: function (data) {
+
+					if (data.code == 0) {
+
+						$('.today_member_count').html(data.data.today_member_count);
+						$('.today_pay_member_count').html(data.data.today_pay_member_count);
+						$('.today_video_released').html(data.data.today_video_released);
+						$('.today_company_released').html(data.data.today_company_released);
+						$('.today_seeker_released').html(data.data.today_seeker_released);
+						$('.today_message').html(data.data.today_message);
+						// $('.today_company_released').html('<em>￥</em><span class="counter">' + data.data.total_tixian_money + '</span>');
+						// $('.today_seeker_released').html('<em>￥</em><span class="counter">' + data.data.total_commiss_money + '</span>');
+						// $('.today_message').html('<em>￥</em><span class="counter">' + data.data.total_order_money + '</span>');
+
+						$('.counter').countUp();
+
+						$('.seven_member_count').html(data.data.seven_member_count);
+						$('.seven_video_money').html(data.data.seven_video_money);
+						$('.seven_message_money').html(data.data.seven_message_money);
+
+						$('.member_count').html(data.data.member_count);
+						$('.video_count').html(data.data.video_count);
+						$('.all_message_count').html(data.data.all_message_count);
+					}
+				}
+			})
+
+
+		}
+	</script>
+	<script type="text/javascript">
+		$('.counter').countUp();
+	</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href="/resource/css/bootstrap.min.css?v=201903260001" rel="stylesheet">
+<link href="/resource/css/common.css?v=201903260001" rel="stylesheet">
+
+<script type="text/javascript" src="/resource/js/lib/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="/resource/js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resource/js/lib/jquery.nice-select.js?v=201903260001"></script>
+<link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+<link href="/static/css/snailfish.css" rel="stylesheet">
+</head>
+
+<div style='height:200px;width:550px;'>
+	<div class="input-group layui-row" style="margin:10px;">
+		<input type="text" placeholder="请输入用户手机号码、或者用户ID 进行搜索" id="select-url-kw" value="" class="form-control">
+		<span class="input-group-addon btn btn-default select-btn" data-type="url">搜索</span>
+	</div>
+	<table class="table table-hover supplyquery" style="width:550px;">
+		<tbody>
+			{foreach name="users_list_res" item="vo"}
+			<tr>
+				<td><img src="{$vo.avatar}" style='width:30px;height:30px;padding:1px;border:1px solid #ccc' /> </td>
+				<td>{$vo.nickname}</td>
+				<td style="width:80px;"><a href="javascript:;" class="choose_dan_link_goods" data-nickname="{$vo.nickname}"
+						data-avatar="{$vo.avatar}" data-user_id="{$vo.user_id}">选择</a>
+				</td>
+			</tr>
+			{/foreach}
+			
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="3">
+					<div class="layui-card-body " align='center'>
+						<div class="page">
+							<div>
+								{$page}
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+
+<script>
+	var query_kwd = '{$kwd}';
+	var query_url = "{:url('video/query_normal')}";
+	var can_next = true;
+
+	var ret;
+
+	$(".select-btn").click(function () {
+		query_kwd = $.trim($("#select-url-kw").val());
+		if (!can_next) {
+			return false;
+		}
+		can_next = false;
+		$.ajax({
+			url: query_url,
+			type: 'post',
+			dataType: 'json',
+			data: { keyword: query_kwd, is_ajax: 1 },
+			success: function (ret) {
+				if (ret.status == 1) {
+					$('.supplyquery tbody').html(ret.html);
+				}
+				can_next = true;
+			}
+		})
+	});
+	$(document).delegate(".choose_dan_link_goods", "click", function () {
+		var user_id = $(this).attr('data-user_id');
+		var nickname = $(this).attr('data-nickname');
+		var avatar = $(this).attr('data-avatar');
+		var html = '<div class="layadmin-text-center choose_user"> ' +
+			'<img src="' + avatar + '"><div class="layadmin-maillist-img">' + nickname + '</div>' +
+			'<button type="button" class="layui-btn layui-btn-sm" onclick="cancle_bind()">' +
+			'<i class="layui-icon">删除</i>' +
+			'</button>' +
+			'</div>'
+		$(window.parent.document).find("#anchor_id_div").html(html);
+		$(window.parent.document).find("#anchor_id").val(user_id);
+		window.parent.layer.closeAll();
+
+		window.parent.get_category(user_id);
+	});
+</script>

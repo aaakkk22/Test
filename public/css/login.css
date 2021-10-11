@@ -1,0 +1,23 @@
+body{
+    background: url(/public/images/timg.jpg) no-repeat 0px 0px;
+    background-size: cover;
+    
+    }
+    .lay-form-box {
+        background: rgba(255,255,255,.8);
+        border-radius: 25px -25px 25px -25px;
+    }
+    .lay-form-box{
+        position: absolute;
+        top: 20%;
+        right:16%;
+        width: 500px;
+        z-index: 999;
+      
+    }
+    .login-choose{
+        display: inline-block;
+        padding-left: 20px;
+        font-size: 20px;
+    }
+    

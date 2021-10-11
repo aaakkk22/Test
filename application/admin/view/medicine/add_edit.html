@@ -1,0 +1,157 @@
+{include file="public:header"/}
+
+<body layadmin-themealias="default">
+
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-header layui-elem-quote">当前位置：<span style="color: #009688;">新增药品</span></div>
+
+            <div class="layui-card-body" style="padding:15px;">
+
+                <form action="" method="post" class="layui-form" lay-filter="component-layui-form-item"
+                    enctype="multipart/form-data">
+                    <!-- 隐藏的id   编辑的时候 有用  -->
+                    <input type="hidden" name="data[id]" value="{$list.id}" />
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='medicine_name' name="data[medicine_name]" class="form-control" value="{$list.medicine_name}" lay-verify="required" style="width: 300px;">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label must">药品图片</label>
+                        <div class="layui-input-block gimgs">
+                            <div class="input-group "  style="width: 300px;">
+                                <input type="text" name="data[image]" id="image" value="{$list.image}"
+                                    class="form-control" autocomplete="off" lay-verify="required">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="GetUploadify(1,'','video','call_back');">选择图片</button>
+                                </span>
+                            </div>
+                            <div class="input-group " style="margin-top:.5em;">
+                                <img id="image2" src="{$list.image}"
+                                    onerror="this.src='/static/images/nopic.png'; this.title='图片未找到.'"
+                                    class="img-responsive img-thumbnail" width="150">
+                                <em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片"
+                                    onclick="deleteImage(this)">×</em>
+                            </div>
+                            <span class="layui-form-mid layui-word-aux image-block">长方形png图标，最佳尺寸:400*730</span>
+                        </div>
+                    </div>
+
+                    <script>
+                        // 上传商品图片成功回调函数
+                        function call_back(fileurl_tmp) {
+                            console.log(fileurl_tmp);
+                            $("#image").val(fileurl_tmp);
+                            $("#image2").attr('src', fileurl_tmp);
+                        }
+                        //删除图片
+                        function deleteImage() {
+                            layer.msg('不支持删除，重新选择图片进行替换即可', {
+                                time: 1000
+                            });
+                        }
+                    </script>
+                     <div class="layui-form-item">
+                        <label class="layui-form-label">药品编号</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='medicine_sn' name="data[medicine_sn]" class="form-control" value="{$list.medicine_sn}" lay-verify="required" style="width: 300px;">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品类别</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='cat_name' name="data[cat_name]" class="form-control" value="{$list.cat_name}" lay-verify="required" style="width: 300px;">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品价格</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='price' name="data[price]" class="form-control" value="{$list.price}" lay-verify="required" style="width: 300px;">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品单位</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='key' name="data[key]" class="form-control" value="{$list.key}" lay-verify="required" style="width: 300px;">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='address' name="data[address]" class="form-control" value="{$list.address}" lay-verify="required" style="width: 300px;">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">药品库存</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='stock' name="data[stock]" class="form-control" value="{$list.stock}" lay-verify="required" style="width: 300px;">
+                        </div>
+                    </div>
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label">描述</label>
+                        <div class="layui-input-block">
+                            <textarea rows="3" id="description" name="data[description]" type="text-textarea"
+                                style="width:25%;height:150px">{$list.description}</textarea>
+                        </div>
+                    </div> -->
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> </label>
+                        <div class="layui-input-block">
+                            <input type="submit" value="提交" lay-submit lay-filter="formDemo" class="btn btn-primary" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-default" style='margin-left:10px;'
+                                href="{:url('medicine/index')}">返回列表</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        var layer = layui.layer;
+        var $;
+        var type;
+        layui.use(['jquery', 'layer', 'form', 'upload'], function () {
+            $ = layui.$;
+            var form = layui.form;
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                $.ajax({
+                    url: data.form.action,
+                    type: data.form.method,
+                    data: data.field,
+                    dataType: 'json',
+                    success: function (info) {
+
+                        if (info.status == -1) {
+                            layer.msg(info.msg, {
+                                icon: 2,
+                                time: 2000
+                            });
+                        } else if (info.status == 1) {
+
+                            layer.msg(info.msg, {
+                                icon: 1,
+                                time: 3000,
+                                end: function () {
+
+                                    var backurl =
+                                        "{:url('medicine/index')}";
+                                    location.href = backurl;
+                                }
+                            });
+                        }
+                    }
+                });
+                return false;
+            });
+        })
+    </script>
+</body>
+
+</html>

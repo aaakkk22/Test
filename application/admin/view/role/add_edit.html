@@ -1,0 +1,98 @@
+{include file="public:header"/}
+
+<body layadmin-themealias="default">
+
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-header layui-elem-quote">当前位置：<span style="color: #009688;">添加角色</span></div>
+
+            <div class="layui-card-body" style="padding:15px;">
+
+                <form action="" method="post" class="layui-form" lay-filter="component-layui-form-item"
+                    enctype="multipart/form-data">
+                    <!-- 隐藏的id   编辑的时候 有用  -->
+                    <input type="hidden" name="data[id]" value="{$list.id}" />
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">角色名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='name' name="data[name]" class="form-control" value="{$list.name}" style="width: 300px;" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">拥有权限</label>
+                        <div class="layui-input-block">
+                            <textarea rows="3" id="permission" name="data[permission]" type="text-textarea"
+                                style="width:25%;height:150px" lay-verify="required">{$list.permission}</textarea>
+                        </div>
+                    </div>
+
+                     <!-- <div class="layui-form-item">
+                        <label class="layui-form-label">拥有权限</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='permission' name="data[permission]" class="form-control" value="{$list.permission}" style="width: 300px;" lay-verify="required">
+                        </div>
+                    </div> -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">描述</label>
+                        <div class="layui-input-block">
+                            <input type="text" id='description' name="data[description]" class="form-control" value="{$list.description}" style="width: 300px;" lay-verify="required">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> </label>
+                        <div class="layui-input-block">
+                            <input type="submit" value="提交" lay-submit lay-filter="formDemo" class="btn btn-primary" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-default" style='margin-left:10px;'
+                                href="{:url('role/index')}">返回列表</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        var layer = layui.layer;
+        var $;
+        var type;
+        layui.use(['jquery', 'layer', 'form', 'upload'], function () {
+            $ = layui.$;
+            var form = layui.form;
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                $.ajax({
+                    url: data.form.action,
+                    type: data.form.method,
+                    data: data.field,
+                    dataType: 'json',
+                    success: function (info) {
+
+                        if (info.status == -1) {
+                            layer.msg(info.msg, {
+                                icon: 2,
+                                time: 2000
+                            });
+                        } else if (info.status == 1) {
+
+                            layer.msg(info.msg, {
+                                icon: 1,
+                                time: 3000,
+                                end: function () {
+
+                                    var backurl =
+                                        "{:url('role/index')}";
+                                    location.href = backurl;
+                                }
+                            });
+                        }
+                    }
+                });
+                return false;
+            });
+        })
+    </script>
+</body>
+
+</html>

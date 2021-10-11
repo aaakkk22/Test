@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{$sysinfo.web_name}</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"  name="viewport" />
+    <link href="__STATIC__/Pay/template/steam/static/buy/judi/css/pay_basic.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/Pay/template/steam/static/common/thickbox.css" rel="stylesheet" type="text/css">
+
+
+    <!--    模版页面样式文件结束-->
+    <!--    点击购买遮罩弹窗开始-->
+    <link href="__STATIC__/Pay/template/steam/static/common/nyro.css" rel="stylesheet" type="text/css">
+    <script src="__STATIC__/Pay/template/steam/static/buy/biaozhunban/js/jquery.min.js"></script>
+    <script src="__STATIC__/Pay/assets/layer/layer.js"></script>
+    <script src="__STATIC__/Pay/template/steam/static/common/nyro.js"></script>
+    <!--    点击购买遮罩弹窗结束-->
+
+
+    <!--    核心文件结束-->
+    <!--    支付方式样式文件开始-->
+    <link rel="stylesheet" href="__STATIC__/Pay/template/steam/static/buy/judi/css/iziToast.min.css">
+    <script src="__STATIC__/Pay/template/steam/static/jqlib/dialog/layer.js"></script>
+    <script src="__STATIC__/Pay/template/steam/static/buy/judi/js/pay3.js"></script>
+    <script src="__STATIC__/Pay/template/steam/static/buy/judi/js/iziToast.min.js"></script>
+    <script src="__STATIC__/Pay/assets/js/jquery.qrcode.min.js"></script>
+    <!--    支付方式样式文件结束-->
+
+    <style>
+        *{
+            color:black;
+        }
+        a:hover,a:active,a:focus{color:#196196;}
+        .ismianze{color:#ff9b06;cursor:pointer;}
+        .xxsmbox{ width:1048px; height:auto; overflow:hidden; border:#CCC solid 1px; margin-top:20px; background:#FFF}
+        .center{ margin:0 auto}
+        .mzsm1{ width:780px; height:auto; line-height:29px; color:#252525; font-size:13px; padding:15px 0;}
+        .dyxy{ width:1000px; height:40px; line-height:40px; text-align:center; margin-top:10px}
+
+    </style>
+</head>
+
+
+
+<body>
+
+
+
+
+
+<header>
+    <div class="container">
+        <ul>
+            <li><a href="<?=$siteurl?>">首页</a></li>
+            <li><a href="{:url('pay/index/query')}">订单查询</a></li>
+            <!--<li><a href="" target="_blank" >投诉此商家</a></li>-->
+        </ul>
+        <a href="https://wpa.qq.com/msgrd?v=3&uin={$sysinfo['qq']}&site=qq&menu=yes" target="_blank" class="qq_btn"><img src="__STATIC__/Pay/template/steam/static/buy/judi/images/qq.png" alt="">联系卖家</a>
+    </div>
+</header>
+<!--卖家公告-->
+<div class="banner_bg">
+    <div class="banner">
+        <div class="banner_right"></div>
+        <div class="mjgg" >
+            <h3 style="color:beige;">卖家公告</h3>
+            <p><span id="gonggao" style="color:beige;"> {$sysinfo.notice}</span></p>
+        </div>
+        <div class="ewm_bg">
+            <!--<div class="ewm">-->
+            <!--</div>-->
+            <!--<script>-->
+                <!--$(".ewm").qrcode({-->
+                    <!--render: "table", //table方式-->
+                    <!--width: 120, //宽度-->
+                    <!--height:120, //高度-->
+                    <!--text: 'www.qingju.live' //任意内容-->
+                <!--})-->
+            <!--</script>-->
+            <!--<br>扫描二维码手机支付-->
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+<!--选择商品-->
+<div class="container">
+
+    <div class="title">1. 选择商品 <span>/ CHOOSE GOODS</span><img src="__STATIC__/Pay/template/steam/static/buy/judi/images/title1.png" alt=""></div>
+    <div class="main_box">
+        <!--选择商品表单-->
+        <div class="choose_good_form">
+            <div class="my_box" style="height:auto; line-height:24px; font-size:14px; padding:10px;border: 1px solid rgba(230,152,0,0.4)">
+                <div class="my_right" style="width: calc(100% - 8px);color:#CDDC39;"><font size="4" ><strong style="color:beige;">商品告示</strong>：<span id="goodsinfo" style="color:beige;"></span></font></div>
+            </div>
+            <div class="my_box">
+                <div class="my_left">商品分类：</div>
+                <div class="my_right">
+                    <select name="cateid"  id="goodstype" onchange="getgoodslist(this.value)">
+                        {volist name="select_info" id="list"}
+                        <option value="{$list.id}" >{$list.name}</option>
+                        {/volist}
+                    </select>
+
+                </div>
+            </div>
+            <div class="my_box">
+                <div class="my_left">商品名称：</div>
+                <div class="my_right">
+
+                    <select class="form-control" id="goodsshow" onchange="getgoodsmsg()">
+                        <option value="">请选择商品</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="my_box">
+                <div class="my_left">商品单价：</div>
+                <div class="my_right"><span class="big_text" id="goodsprice"></span>元
+
+                </div>
+            </div>
+            <div class="my_box"  style="<?=$conf['showKc'] == 2 ? "display:none;" : ""?>">
+            <div class="my_left" >商品库存：</div>
+            <div class="my_right">剩余<span class="big_text" id="goodskc" ></span>个
+
+            </div>
+        </div>
+        <input type="hidden" name="paymoney" value="">
+        <input type="hidden" name="danjia" value="">
+        <div class="my_box" id="number_xz">
+            <div class="my_left">购买数量：</div>
+            <div class="my_right" >
+                <div class="btn-ayang" style="display:inline;width:30px;height:30px;border:1px solid black;cursor: pointer;" onclick='numstepDown()'>&nbsp;-&nbsp;</div>
+                <input type="text" onBlur="checknum()"  name="number" id="number"  min="1" step="1" value="1" required style="display:inline;width:50px;height:25px;border: 1px solid black;background-color: gray; ">
+                <div class="btn-ayang" style="border:1px solid black;cursor: pointer;display:inline;width:30px;height:30px" onclick='numstepUp()'>&nbsp;+&nbsp;</div>
+            </div>
+        </div>
+
+        <div class="my_box">
+            <div class="my_left">联系方式：</div>
+            <div class="my_right">
+                <input id="qq" name="contact" type="text" onfocus="js_money()" placeholder="用于查询历史订单（只能是数字）">
+
+            </div>
+        </div>
+
+        <div class="my_box"  style="<?=$conf['iscoupon'] == 0 ? "display:none" : ""?>">
+        <div class="my_left">优惠券：</div>
+        <div class="my_right">
+            <input id="coupon" name="coupon" type="text"  placeholder="有券则填,无券不填">
+        </div>
+
+    </div>
+
+    <div class="my_box"  style="<?=$conf['sendphonedx'] == 0 ? "display:none" : ""?>">
+    <div class="my_left">手机号码：</div>
+    <div class="my_right">
+        <input id="phone" name="phone" type="text"  placeholder="将卡密发送到您的手机">
+    </div>
+
+</div>
+
+<div class="my_box" id="pwdforsearch1" style="<?=$conf['paypasstype'] == 2 ? "display:none" : ""?>" >
+<!--<div class="my_left">取卡密码：</div>-->
+<!--<div class="my_right"><input type="text" id="paypass"  placeholder="[必填]请输入取卡密码（6-20位）"></div>-->
+</div>
+
+<div class="my_box" style="height:auto; font-size:18px; margin-bottom:0 ; padding:0 10px;color:#e69800;background: #fff;border: none">
+    应付总额： <b class="tprice" id="tprice"></b>元
+</div>
+</div>
+<div class="user_info">
+    <img src="__STATIC__/Pay/images/index-logo.png" alt="" width="300">
+    <!--/template/steam/static/buy/judi/images/visual_main_title.png-->
+    <br>
+
+    <h3 style="color:beige;">卖家信息</h3>
+    <p>店铺名称：{$sysinfo.store_name} <br>
+        <!--卖家网站：<?=$siteurl?><br>-->
+        商品类型： 数字卡密<br>
+        发货类型： 自动发货<br>
+        卖家Q Q：{$sysinfo.qq}</p>
+</div>
+<div class="clear"></div>
+</div>
+<div class="title">2. 付款方式 <span>/ PAYMENT</span><img src="__STATIC__/Pay/template/steam/static/buy/judi/images/title2.png" alt=""></div>
+<div class="main_box">
+    <div class="pay_box">
+        <div class="pay_menu">
+            <!--                扫码支付-->
+            <div class="pay pay_cj_1 checked1"><img src="__STATIC__/Pay/template/steam/static/buy/one_half_one_half_defalut/images/pay1.png" width="18" height="18" style="vertical-align:middle"> 扫码支付</div>
+            <!--                网银支付-->
+        </div>
+
+        <!--                扫码支付-->
+        <div class="pay_list1">
+            <!--<label class="lab3 checked2">-->
+                <!--<input name="type" value="1" type="radio" checked title="支付宝">-->
+                <!--<img src="__STATIC__/Pay/template/steam/static/tpl/default/images/ALIPAY.jpg" width="142" height="42">-->
+            <!--</label>-->
+
+            <label class="lab3">
+                <input name="type" value="3" type="radio" title="微信">
+                <img src="__STATIC__/Pay/template/steam/static/tpl/default/images/WEIXIN.jpg" width="142" height="42">
+            </label>
+
+            <!--<label class="lab3">-->
+                <!--<input name="type" value="2"type="radio" title="QQ钱包">-->
+                <!--<img src="__STATIC__/Pay/template/steam/static/tpl/default/images/qqrcode.jpg" width="142" height="42">-->
+            <!--</label>-->
+
+
+        </div>
+        <!--                网银支付-->
+
+        <div class="center" id="testD" style="display: none;">
+            <div class="mzsm1 center">
+                <font style=" color:#FF9933; font-size:16px"> 购买协议：<br></font>
+                <font style=" color:#FFF">
+                    一、购买前请先确认客服是否真实。<br>
+                    二、本站所有商品均与‘阿洋网络’无关,任何售后问题请联系售卡商家处理。<br>
+                    三、如果出现商品交易纠纷、商品使用及售后服务等相关问题，请与售卡商家自行协商处理。<br>
+                    四、务必认真核实商家信息,避免别骗。<br>
+                </font>
+
+            </div>
+        </div>
+
+        <input name="isagree"  type="checkbox" checked="checked">我已阅读并同意
+        <a class="ismianze" onclick="testDisplay()">《购买协议》</a>
+        <div id="submit">
+            <input type="button" class="check_pay" id="check_pay" onclick="submit_steams()" value="确认支付">
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+</div>
+<script src="__STATIC__/Pay/assets/jquery/jquery.cookie.js"></script>
+<script src="__STATIC__/Pay/assets/js/index.js"></script>
+<script>
+    var tid = $("#goodstype option:selected").val();
+    getgoodslist(tid);
+
+
+</script>
+
+<!--    支付页面样式文件开始-->
+<script type="text/javascript">
+    function js_money(){
+        var gid = $("#goodsshow option:selected").val();
+        var price = $("#goodsprice").text();
+        var number = parseInt($("#number").val());
+        var  allprice = (price*number).toFixed(2);
+        $("#tprice").text(allprice);
+    }
+    function submit_steams(){
+        js_money();
+        var timestamp =Date.parse(new Date());
+        var rand = Math.floor(Math.random()*(99999-99+1)+99);
+        var tradeno =  timestamp+""+rand;
+        var gid = $("#goodsshow option:selected").val();
+        var gname = $("#goodsshow option:selected").text();
+        var price = $("#goodsprice").text();
+        var goodskc = parseInt($("#goodskc").text());
+        var number = parseInt($("#number").val());
+        var qq = $("#qq").val();
+        var type = $("input:radio[name='type']:checked").val();//付款方式
+        var payfs = $("input:radio[name='type']:checked").attr("title");//付款方式2
+        var paypass = $("#paypass").val();
+        var coupon = $("#coupon").val();
+        var phone = $("#phone").val();
+        var allprice = (price*number).toFixed(2);
+        if(gid <= 0){
+            layer.tips('哎呀,该商品无法下单~~', '#check_pay', {
+                tips: [1, '#3595CC'],
+                time: 1500
+            });
+            return;
+        }
+        if(qq=="" || isNaN(qq) || qq.length <5){
+            layer.tips('亲,要输入正确的联系方式哦~~', '#check_pay', {
+                tips: [2, '#3595CC'],
+                time: 1500
+            });
+            return;
+        }
+        if(kcnumber!=goodskc){
+            layer.tips('哎呀,商品获取异常,请刷新页面重新下单~~', '#check_pay', {
+                tips: [1, '#3595CC'],
+                time: 1500
+            });
+            return;
+        }
+        if(goodskc < 1 || number > goodskc){
+            layer.tips('商品库存不足,无法购买！', '#check_pay', {
+                tips: [1, '#3595CC'],
+                time: 2000
+            });
+            return;
+        }
+        if(payfs == undefined || type == undefined || payfs=="undefined" || type == "undefined"){
+            layer.tips('亲,选择一个支付方式哦！', '#check_pay', {
+                tips: [1, '#3595CC'],
+                time: 2000
+            });
+            return;
+        }
+        console.log(type);
+        var ii = layerload("正在创建订单...");
+        $.ajax({
+            type : "POST",
+            url : "{:url('pay/index/create_order')}",
+            data : {
+                "trade_no":tradeno,
+                "gid":gid,
+                "money":allprice,
+                // "price":price,
+                "rel":qq,
+                "type":type,
+                "number":number,
+                // "paypass":paypass,
+                // "coupon":coupon,
+                // "phone":phone
+            },
+            dataType : 'json',
+            success : function(data) {
+                layer.close(ii);
+                // console.log(data.info['money']);
+                if(data.status == 1){
+                    if(data.info['money'] != allprice){
+                        allprice = data.info['money']+"￥<font style='color:Red'>("+data.psm+")</font>";
+                    }else{
+                        allprice = data.info['money']+"￥";
+                    }
+                    var html = "<span style='color:#000'>"
+                        +"订单编号："+data.info['trade_no']
+                        +"<br>商品名称："+gname
+                        +"<br>商品单价："+price
+                        +"<br>购买数量："+number
+                        +"<br>联系QQ："+qq
+                        +"<br>支付方式："+payfs
+                        +"<br>应付款：<font style='font-size:18px' color=red>"+allprice+"</font>"
+                        +"</span>";
+                    $.cookie('trade_no',data.info['trade_no']);
+                    // $.cookie('paypass',paypass);
+                    layer.open({
+                        title:"请核对订单信息",
+                        content: html
+                        ,btn: ['立即付款', '暂不付款']
+                        ,yes: function(index){
+                            // window.location.href='./other/submit.php?paynumber='+data.md5_tradeno;
+                            window.location.href='pay/index/pay?price='+data.info['money']+'&type='+data.info['type']+'&pay_id='+data.info['trade_no'];
+                        }
+                    });
+                }else{
+                    layer.alert(data.msg);
+                    return false;
+                }
+            },
+            error:function(data){
+                layer.close(ii);
+                layer.msg('系统错误！');
+                return false;
+            }
+        })
+    }
+
+
+
+</script>
+<!--    支付页面样式文件结束-->
+
+<div class="foot">{$sysinfo.footer_info}</div>
+</body>
+</html>

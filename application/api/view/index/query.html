@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        订单查询
+    </title>
+    <meta content="{$sysinfo.web_name}" name="Keywords">
+    <meta name="description" content="{$sysinfo.web_name}" />
+    <link rel="stylesheet" href="__STATIC__/Pay/xiaoxianyu/AmazeUI/css/amazeui.css" >
+    <script src="__STATIC__/Pay/xiaoxianyu/layui/layui.js"></script>
+    <script src="https://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+    <script src="__STATIC__/Pay/xiaoxianyu/AmazeUI/js/amazeui.min.js"></script>
+    <script type="text/javascript" src="https://at.alicdn.com/t/font_486278_cz1h5tt67nt.js"></script>
+    <link rel="stylesheet" href="__STATIC__/Pay/xiaoxianyu/css/style.css" >
+    <style type="text/css">
+        .am-container{max-width:1200px}
+        .am-topbar .am-text-ir {display: block;margin-right: 10px;height: 60px;width: 130px;background: url("__STATIC__/Pay/images/index-logo.png") no-repeat left center;-webkit-background-size: 125px 24px;background-size: 125px 24px;}
+        /* 色调设置 */
+        .am-topbar-inverse{background-color:#E54D42}
+        .thhead{background-color:#ffc6c6;color:#E54D42}
+        .liebiaocatname{background-color:#fff0f0;color:#707070}
+        .wapcatname{background-color:#ffc6c6;color:#E54D42}
+        /* 色调设置 */
+        .index_good_body:hover{box-shadow:0 15px 35px rgba(0,0,0,.2);z-index:2}
+    </style>
+</head>
+<style>
+</style>
+<body>
+<header class="am-topbar am-topbar-inverse am-topbar-fixed-top">
+    <div class="am-container">
+        <h1 class="am-topbar-brand" style="margin:0 10px 0 0;"> <a href="/" class="am-text-ir" style="background-size: 130px 40px;"></a> </h1>
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse-2'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse-2">
+            <ul class="am-nav am-nav-pills am-topbar-nav">
+                <li><a href="/pay"><span class="am-icon-home am-icon-sm"></span>首页</a></li>
+                <li><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=551107169&amp;site=qq&amp;menu=yes" target="_blank"><i class="am-icon-qq am-icon-fw"></i>客服</a></li>
+                <!--<li><a href="/index/ArticleList.html"><span class="am-icon-list-alt"></span>帮助</a></li>-->
+            </ul>
+            <div class="am-topbar-right">
+                <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <!--<li><a href="/user.php"><span class="am-icon-users"></span>会员中心</a></li>-->
+                    <li><a href="{:url('pay/index/query')}"><span class="am-icon-search"></span>订单查询</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="am-container" style="padding:2px">
+
+    <form action="{:url('pay/index/query')}" method="post" class="layui-form">
+        <div class="am-panel am-panel-default">
+            <div class="am-panel-hd">订单查询【输入订单号或者联系方式】</div>
+            <div class="am-panel-bd">
+                <div class="am-g">
+                    <div class="am-u-lg-3">
+                        <div class="am-input-group">
+                              <span class="am-input-group-btn">
+                                <button class="am-btn am-btn-default" type="button">订单</button>
+                              </span>
+                            <input type="text" class="am-form-field" name="where" value="" required>
+                        </div>
+                    </div>
+                    <!--<div class="am-u-lg-3">-->
+                        <!--<div class="am-input-group">-->
+                              <!--<span class="am-input-group-btn">-->
+                                <!--<button class="am-btn am-btn-default" type="button">页数 </button>-->
+                              <!--</span>-->
+                            <!--<input type="text" class="am-form-field" name="page" value="1" required>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="am-u-lg-3">-->
+                        <!--<div class="am-input-group">-->
+                                <!--<span class="am-input-group-btn">-->
+                                    <!--<img src="/captcha.html" alt="captcha" style="height: 39px" onclick="this.src='/captcha?id='+Math.random()"/>-->
+                                <!--</span>-->
+                            <!--<input type="text" class="am-form-field" name="captcha" placeholder="输入验证码" required>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="am-u-lg-3 am-u-end">
+                        <button type="submit" class="am-btn am-btn-success" id="embed-submit" style="width:100%;margin-top: 3px">查询</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {foreach name="info" item="info"}
+    <div class="am-panel am-topbar-inverse">
+        <ul class="am-list am-list-static" style="color:#3c3c3c">
+            <li>订单编号：{$info.trade_no}</li>
+            <li>商品名称：{$info.gid}</li>
+            <li>下单时间：{$info.benTime}</li>
+            <li>订单价格：¥{$info.money}</li>
+            <li>购买数量：{$info.number}</li>
+            <li>订单状态：<svg class="icon" aria-hidden="true">
+                {if condition="$info['state'] eq '已完成'"}
+                    <use xlink:href="#icon-yifukuan"></use>
+                    </svg>已付款
+                {else /}
+                    <use xlink:href="#icon-chaoshiweifukuan"></use>
+                    </svg>未付款
+                {/if}
+            </li>
+            {if condition="$info['state'] eq '已完成'"}
+            <a style="width:100%;font-weight: bold" href="page?pay_id={$info.trade_no}">
+                <li style="text-align: center;color: #fff;padding:10px" class="am-topbar-inverse">查看详情</li></a>
+            {/if}
+        </ul>
+
+    </div>
+    {/foreach}
+    <!--<div class="am-panel am-topbar-inverse">-->
+        <!--<ul class="am-list am-list-static" style="color:#3c3c3c">-->
+            <!--<li>订单编号：B648CCB6461D1201908174E054FACE32</li>-->
+            <!--<li>商品名称：【镇店之宝】10位全新QQ号码 / 统一密码 / 游戏推荐 </li>-->
+            <!--<li>下单时间：2019-08-17 13:09:19</li>-->
+            <!--<li>订单价格：0.30</li>-->
+            <!--<li>购买数量：1</li>-->
+            <!--<li>订单状态：<svg class="icon" aria-hidden="true">-->
+                <!--<use xlink:href="#icon-yifukuan"></use>-->
+            <!--</svg>已付款      </li>-->
+            <!--<a style="width:100%;font-weight: bold" href="/index/orderInfo.html?ddid=B648CCB6461D1201908174E054FACE32">-->
+                <!--<li style="text-align: center;color: #fff;padding:10px" class="am-topbar-inverse">查看详情</li></a>-->
+        <!--</ul>-->
+
+    <!--</div>-->
+
+    <!--<div class="tongji"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274913776'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274913776%26online%3D2' type='text/javascript'%3E%3C/script%3E"));</script><br>{$sysinfo.footer_info}</div>-->
+</div>
+
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+    });
+
+
+</script>
+
+</body>
+</html>
